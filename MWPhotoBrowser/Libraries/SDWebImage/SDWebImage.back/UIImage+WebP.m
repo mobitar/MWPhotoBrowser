@@ -18,9 +18,11 @@ static void FreeImageData(void *info, const void *data, size_t size)
 
 @implementation UIImage (WebP)
 
-+ (UIImage *)sd_imageWithWebPData:(NSData *)data {
++ (UIImage *)sd_imageWithWebPData:(NSData *)data
+{
     WebPDecoderConfig config;
-    if (!WebPInitDecoderConfig(&config)) {
+    if (!WebPInitDecoderConfig(&config))
+    {
         return nil;
     }
 
@@ -28,13 +30,15 @@ static void FreeImageData(void *info, const void *data, size_t size)
     config.options.use_threads = 1;
 
     // Decode the WebP image data into a RGBA value array.
-    if (WebPDecode(data.bytes, data.length, &config) != VP8_STATUS_OK) {
+    if (WebPDecode(data.bytes, data.length, &config) != VP8_STATUS_OK)
+    {
         return nil;
     }
 
     int width = config.input.width;
     int height = config.input.height;
-    if (config.options.use_scaling) {
+    if (config.options.use_scaling)
+    {
         width = config.options.scaled_width;
         height = config.options.scaled_height;
     }
@@ -58,11 +62,8 @@ static void FreeImageData(void *info, const void *data, size_t size)
 
 @end
 
-#if !COCOAPODS
 // Functions to resolve some undefined symbols when using WebP and force_load flag
 void WebPInitPremultiplyNEON(void) {}
 void WebPInitUpsamplersNEON(void) {}
 void VP8DspInitNEON(void) {}
-#endif
-
 #endif
